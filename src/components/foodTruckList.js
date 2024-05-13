@@ -12,8 +12,8 @@ export default function FoodTruckList(props) {
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {foodTrucks.map((item, i) => {
         return (
-          <>
-            <ListItem key={i} style={{ cursor: 'pointer', textAlign: 'center' }}> 
+          <div key={i}>
+            <ListItem style={{ cursor: 'pointer', textAlign: 'center' }}> 
               <ListItemText
                 primary={item.applicant}
                 secondary={
@@ -33,7 +33,7 @@ export default function FoodTruckList(props) {
             </ListItem>
             <Link to={`/${item.objectid}`} style={{ marginBottom: '10px', display: 'block' }}>View</Link>
           <Divider component="li" />
-        </>
+        </div>
         );
       })}
     </List>
