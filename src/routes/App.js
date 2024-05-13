@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
@@ -18,20 +18,20 @@ const App = () => {
   const [offset, setOffset] = useState(0);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchFoodTrucks = async () => {
-      setIsLoading(true);
-      const response = await fetch(`${FOOD_TRUCKS_BASE_URL}/food-trucks?limit=${PAGINATION_LIMIT}&offset=${offset}`);
-      const data = await response.json();
-      if (response.status !== 200) {
-        setError(data.message || 'Error fetching content');
-      }
-      setFoodTrucks(data);
-      setIsLoading(false);
-    };
-
-    fetchFoodTrucks();
+  const fetchFoodTrucks = useCallback(async () => {
+    setIsLoading(true);
+    const response = await fetch(`${FOOD_TRUCKS_BASE_URL}/food-trucks?limit=${PAGINATION_LIMIT}&offset=${offset}`);
+    const data = await response.json();
+    if (response.status !== 200) {
+      setError(data.message || 'Error fetching content');
+    }
+    setFoodTrucks(data);
+    setIsLoading(false);
   }, [offset]);
+
+  useEffect(() => {
+    fetchFoodTrucks();
+  },[fetchFoodTrucks]);
 
   const searchFoodTrucks = async () => {
     if (searchValue === '') {
@@ -70,6 +70,11 @@ const App = () => {
     setOffset(offset - PAGINATION_LIMIT);
   }
 
+  const clearSearchResults = () => {
+    setSearchValue('');
+    fetchFoodTrucks();
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -80,17 +85,21 @@ const App = () => {
           helperText="Example: 'Taco' (food type) or 'Trully' (food truck name)"
           id="demo-helper-text-aligned"
           label="Search"
+          value={searchValue || ''}
           variant="filled"
           onKeyDown={handleKeyDown}
           onChange={handleOnChangeSearchText}
           InputProps={{
             endAdornment: (
-              <IconButton>
-                <SearchIcon onClick={searchFoodTrucks}/>
+              <IconButton onClick={searchFoodTrucks}>
+                <SearchIcon/>
               </IconButton>
             ),
           }}
         />
+        {searchValue.length > 0 &&
+          <Button onClick={clearSearchResults}>Clear</Button>
+        }
       </header>
       {isLoading &&
       <LinearProgress />}
