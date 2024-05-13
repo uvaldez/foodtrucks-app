@@ -82,7 +82,7 @@ const App = () => {
           Food Trucks in San Francisco
         </p>
         <TextField
-          helperText="Example: 'Taco' (food type) or 'Trully' (food truck name)"
+          helperText="Example: 'Taco' (food type) or 'Scotch' (food truck name)"
           id="demo-helper-text-aligned"
           label="Search"
           value={searchValue || ''}
