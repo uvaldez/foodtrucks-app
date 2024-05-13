@@ -1,5 +1,3 @@
-# foodtrucks-app
-
 ## Documentation
 https://foodtrucks-docs.onrender.com/docs/category/frontend-app
 
