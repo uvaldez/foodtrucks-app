@@ -47,6 +47,8 @@ const FoodTruckView = (props) => {
       </CardActions>
       <Collapse in={true} timeout="auto" unmountOnExit>
         <CardContent>
+          <Typography paragraph fontWeight={700}>Type</Typography>
+          <Typography paragraph >{foodTruck.facilitytype}</Typography>
           <Typography paragraph fontWeight={700}>Hours:</Typography>
           <Typography paragraph>{foodTruck.dayshours}</Typography>
           <Typography paragraph fontWeight={700}>Address:</Typography>
